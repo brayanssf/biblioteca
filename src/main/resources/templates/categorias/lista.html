@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="../_layout :: head('Categorias')"></head>
+
+<div th:replace="../_layout :: layout('Categorias', ~{::content})">
+    <div th:fragment="content">
+
+        <div class="d-flex justify-content-between mb-3">
+            <h1>Categorias</h1>
+            <a class="btn btn-primary" th:href="@{/categorias-site/novo}">+ Nova Categoria</a>
+        </div>
+
+        <div th:if="${ok}" class="alert alert-success" th:text="${ok}"></div>
+
+        <table class="table">
+            <thead class="table-light">
+                <tr>
+                    <th>ID</th>
+                    <th>Nome</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="c : ${categorias}">
+                    <td th:text="${c.id}"></td>
+                    <td th:text="${c.nome}"></td>
+                    <td>
+                        <form th:action="@{'/categorias-site/' + ${c.id} + '/excluir'}" method="post" class="d-inline"
+                            onsubmit="return confirm('Excluir categoria?')">
+                            <button class="btn btn-sm btn-outline-danger">Excluir</button>
+                        </form>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
+</div>
+
+</html>

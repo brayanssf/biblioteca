@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="../_layout :: head('Usuários')"></head>
+
+<div th:replace="../_layout :: layout('Usuários', ~{::content})">
+    <div th:fragment="content">
+
+        <h1>Usuário</h1>
+
+        <div th:if="${erro}" class="alert alert-danger" th:text="${erro}"></div>
+
+        <form th:action="@{/usuarios-site}" th:object="${usuario}" method="post">
+
+            <input type="hidden" th:field="*{id}">
+
+            <div class="mb-3">
+                <label class="form-label">Nome:</label>
+                <input class="form-control" type="text" th:field="*{nome}" required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">E-mail:</label>
+                <input class="form-control" type="text" th:field="*{email}">
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Telefone:</label>
+                <input class="form-control" type="text" th:field="*{telefone}">
+            </div>
+
+            <button class="btn btn-primary" type="submit">Salvar</button>
+            <a class="btn btn-secondary" th:href="@{/usuarios-site}">Voltar</a>
+        </form>
+
+    </div>
+</div>
+
+</html>

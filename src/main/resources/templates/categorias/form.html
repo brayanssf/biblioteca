@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="../_layout :: head('Categoria')"></head>
+
+<div th:replace="../_layout :: layout('Categoria', ~{::content})">
+    <div th:fragment="content">
+
+        <h1>Cadastro de Categoria</h1>
+
+        <div th:if="${erro}" class="alert alert-danger" th:text="${erro}"></div>
+
+        <form th:action="@{/categorias-site}" th:object="${categoria}" method="post">
+
+            <input type="hidden" th:field="*{id}" />
+
+            <div class="mb-3">
+                <label>Nome *</label>
+                <input class="form-control" th:field="*{nome}" required />
+            </div>
+
+            <div class="mb-3">
+                <label>Descrição</label>
+                <textarea class="form-control" th:field="*{descricao}"></textarea>
+            </div>
+
+            <button class="btn btn-primary">Salvar</button>
+
+        </form>
+    </div>
+</div>
+
+</html>

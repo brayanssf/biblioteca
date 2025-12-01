@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="../_layout :: head('Usuários')"></head>
+
+<div th:replace="../_layout :: layout('Usuários', ~{::content})">
+    <div th:fragment="content">
+
+        <div class="d-flex justify-content-between mb-3">
+            <h1>Usuários</h1>
+            <a class="btn btn-primary" th:href="@{/usuarios-site/novo}">+ Novo Usuário</a>
+        </div>
+
+        <div th:if="${ok}" class="alert alert-success" th:text="${ok}"></div>
+        <div th:if="${erro}" class="alert alert-danger" th:text="${erro}"></div>
+
+        <table class="table table-hover">
+            <thead class="table-light">
+                <tr>
+                    <th>ID</th>
+                    <th>Nome</th>
+                    <th>Email</th>
+                    <th>Telefone</th>
+                    <th style="width:150px">Ações</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr th:each="u : ${usuarios}">
+                    <td th:text="${u.id}"></td>
+                    <td th:text="${u.nome}"></td>
+                    <td th:text="${u.email}"></td>
+                    <td th:text="${u.telefone}"></td>
+
+                    <td>
+                        <a class="btn btn-sm btn-outline-primary"
+                            th:href="@{|/usuarios-site/{id}/editar|(id=${u.id})}">Editar</a>
+
+                        <form method="post" th:action="@{|/usuarios-site/{id}/excluir|(id=${u.id})}" class="d-inline"
+                            onsubmit="return confirm('Excluir este usuário?')">
+                            <button class="btn btn-sm btn-outline-danger" type="submit">Excluir</button>
+                        </form>
+                    </td>
+                </tr>
+
+                <tr th:if="${#lists.isEmpty(usuarios)}">
+                    <td colspan="5" class="text-center text-muted">Nenhum usuário cadastrado.</td>
+                </tr>
+            </tbody>
+
+        </table>
+
+    </div>
+</div>
+
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="../_layout :: head('Empréstimos')"></head>
+<div th:replace="../_layout :: layout('Empréstimos', ~{::content})">
+    <div th:fragment="content">
+
+        <div class="d-flex justify-content-between mb-3">
+            <h1>Empréstimos</h1>
+            <a class="btn btn-primary" th:href="@{/emprestimos-site/novo}">+ Registrar</a>
+        </div>
+
+        <div th:if="${ok}" class="alert alert-success" th:text="${ok}"></div>
+        <div th:if="${erro}" class="alert alert-danger" th:text="${erro}"></div>
+
+        <table class="table">
+            <thead class="table-light">
+                <tr>
+                    <th>ID</th>
+                    <th>Usuário</th>
+                    <th>Livro</th>
+                    <th>Data Empréstimo</th>
+                    <th>Data Devolução</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr th:each="e : ${emprestimos}">
+                    <td th:text="${e.id}"></td>
+                    <td th:text="${e.usuario.nome}"></td>
+                    <td th:text="${e.livro.titulo}"></td>
+                    <td th:text="${e.dataEmprestimo}"></td>
+                    <td th:text="${e.dataDevolucao != null ? e.dataDevolucao : '-'}"></td>
+
+                    <td>
+                        <form th:action="@{|/emprestimos-site/${e.id}/devolver|}" method="post"
+                            onsubmit="return confirm('Registrar devolução?')">
+
+                            <button class="btn btn-sm btn-outline-success" th:if="${e.dataDevolucao == null}">
+                                Devolver
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
+</div>
+
+</html>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="../_layout :: head('Registrar Empréstimo')"></head>
+<div th:replace="../_layout :: layout('Registrar Empréstimo', ~{::content})">
+    <div th:fragment="content">
+        <h1>Registrar Empréstimo</h1>
+        <div th:if="${erro}" class="alert alert-danger" th:text="${erro}"></div>
+
+        <form th:action="@{/emprestimos-site}" th:object="${emprestimo}" method="post">
+            <div class="row g-3">
+
+                <div class="col-md-6">
+                    <label class="form-label">Usuário *</label>
+                    <select class="form-select" th:field="*{usuario.id}" required>
+                        <option value="">Selecione...</option>
+                        <option th:each="u : ${usuarios}" th:value="${u.id}" th:text="${u.nome}"></option>
+                    </select>
+                </div>
+
+                <div class="col-md-6">
+                    <label class="form-label">Livro *</label>
+                    <select class="form-select" th:field="*{livro.id}" required>
+                        <option value="">Selecione...</option>
+                        <option th:each="l : ${livros}" th:value="${l.id}" th:text="${l.titulo}"></option>
+                    </select>
+                </div>
+
+            </div>
+            <button class="btn btn-primary mt-3">Registrar</button>
+        </form>
+    </div>
+</div>
+
+</html>
